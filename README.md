@@ -24,7 +24,9 @@
     modalProps: {
       horizontal: "center",
       vertical: "left",
-      relativeTo: "screen" // or "element"
+      relativeTo: "screen", // or "element"
+      className: "",
+      children: <div></div> // whatever you want
     }
   ]}
 />
