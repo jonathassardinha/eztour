@@ -16,4 +16,16 @@
 
 ## Implementation ideas
 
-- We're gonna build a barebones modal, with a better style and position API
+- We're gonna build a barebones modal, with a better style and position API. The idea for the modal API is something like:
+
+```jsx
+<Tour 
+  steps={[
+    modalProps: {
+      horizontal: "center",
+      vertical: "left",
+      relativeTo: "screen" // or "element"
+    }
+  ]}
+/>
+```
