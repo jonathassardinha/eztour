@@ -12,3 +12,8 @@
 ## Pains or improvements we do not care about
 
 1. Animation between steps
+
+
+## Implementation ideas
+
+- We're gonna build a barebones modal, with a better style and position API
