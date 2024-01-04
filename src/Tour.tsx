@@ -130,6 +130,7 @@ export function Tour({ steps }: TourProps) {
 					/>
 				</Fragment>
 			))}
+			<div style={{padding: '20px', background: "red", position: 'absolute', top: 0, left: 0, zIndex: startingZIndex}}></div>
 		</>
 	) : null;
 }
