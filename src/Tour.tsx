@@ -1,33 +1,28 @@
-import { useState, useRef, useEffect, Fragment, useContext } from "react";
+import { useState, useRef, useEffect, Fragment, useContext, useMemo } from "react";
 import { TourContext } from "./TourContext";
+import { ModalProps, SVGProps, StepProps, TourProps, defaultModalProps, getFocusedElement, startingZIndex } from "./Tour.utils";
+import { generatePosition } from "./assets/ModalAlignment/generatePosition";
 
-type FocusedElementProps = {
-	id: string;
-	padding?: number;
-	shouldNotChangeZIndex?: boolean;
-};
 
-type TourProps = {
-	steps: Array<{ levels: FocusedElementProps[][] }>;
-};
 
-type SVGProps = {
-	x: number;
-	y: number;
-	width: number;
-	height: number;
-	rx: number;
-};
 
 export function Tour({ steps }: TourProps) {
 	const { setTourOpen, tourOpen } = useContext(TourContext);
-
+	const [currentStep, setCurrentStep] = useState<StepProps>(steps[0])
 	const [tourLevels, setTourLevels] = useState<SVGProps[][]>([]);
 	const positionRefs = useRef<Array<{ oldPosition: string; ref: HTMLElement }>>(
 		[]
 	);
 
-	const startingZIndex = 100100;
+	const infoModalProps: ModalProps = useMemo(() => {
+		return {
+			horizontal: currentStep.modalProps?.horizontal ?? defaultModalProps.horizontal,
+			vertical: currentStep.modalProps?.vertical ?? defaultModalProps.vertical,
+			relativeTo: currentStep.modalProps?.relativeTo ?? defaultModalProps.relativeTo,
+			className: currentStep.modalProps?.className ?? defaultModalProps.className,
+			children: currentStep.modalProps?.children ?? <></>,
+		}
+	}, [currentStep])
 
 	const onClose = () => {
 		setTourOpen(false);
@@ -60,9 +55,8 @@ export function Tour({ steps }: TourProps) {
 									ref: focusedElement,
 								});
 
-								focusedElement.style.zIndex = `${
-									startingZIndex - levelIndex * 3
-								}`;
+								focusedElement.style.zIndex = `${startingZIndex - levelIndex * 3
+									}`;
 
 								focusedElement.style.position =
 									oldPosition === "absolute" ? "absolute" : "relative";
@@ -89,6 +83,7 @@ export function Tour({ steps }: TourProps) {
 
 	return tourOpen ? (
 		<>
+
 			{tourLevels.map((highlightStyles, levelIndex) => (
 				<Fragment key={levelIndex}>
 					<svg
@@ -130,7 +125,19 @@ export function Tour({ steps }: TourProps) {
 					/>
 				</Fragment>
 			))}
-			<div style={{padding: '20px', background: "red", position: 'absolute', top: 0, left: 0, zIndex: startingZIndex}}></div>
+			<div id="infoModal" className={infoModalProps.className} style={{
+				zIndex: startingZIndex,
+				position: 'absolute',
+				...generatePosition({
+					horizontal: infoModalProps.horizontal,
+					vertical: infoModalProps.vertical,
+					relativeTo: infoModalProps.relativeTo,
+					focusedElement: getFocusedElement(currentStep)
+				})
+			}}>
+			</div>
 		</>
 	) : null;
 }
+
+// 128 / 191

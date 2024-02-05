@@ -9,7 +9,11 @@ function App() {
 			<TourContext.Consumer>
 				{({ setTourOpen }) => (
 					<div className="wrapper">
-						<div id="div1" onClick={() => setTourOpen(true)}>
+						<div id="div1" />
+						<div id="div2" />
+						<div id="div3" />
+						<div id="div4" />
+						<div id="div5" onClick={() => setTourOpen(true)}>
 							<div id="subdiv1"></div>
 							<div
 								id="subdiv2"
@@ -22,10 +26,6 @@ function App() {
 								}}
 							></div>
 						</div>
-						<div id="div2" />
-						<div id="div3" />
-						<div id="div4" />
-						<div id="div5" />
 						<div id="div6" />
 						<div id="div7" />
 						<div id="div8" />
@@ -44,6 +44,11 @@ function App() {
 												},
 											],
 										],
+										modalProps: {
+											horizontal: 'center',
+											vertical: 'center',
+											relativeTo: 'screen',
+										}
 									},
 								]}
 							/>,

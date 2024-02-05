@@ -2,7 +2,7 @@
 
 ## Pains we want to solve
 
-1. The modal's positioning
+1. The modal's positioning & auto positioning
 2. Multi-level focus
 3. Highlighting untraditional elements (non-square, non-circle)
 4. Styling is weird and overcomplicated
@@ -13,13 +13,12 @@
 
 1. Animation between steps
 
-
 ## Implementation ideas
 
 - We're gonna build a barebones modal, with a better style and position API. The idea for the modal API is something like:
 
 ```jsx
-<Tour 
+<Tour
   steps={[
     modalProps: {
       horizontal: "center",
